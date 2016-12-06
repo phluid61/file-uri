@@ -1,6 +1,9 @@
-# file-uri -- the "file" URI scheme
+# file-uri – the "file" URI scheme
 
 Adds explicit handling for 'file' URIs to the `uri` library.
+
+[![Build Status](https://secure.travis-ci.org/phluid61/file-uri.png)](http://travis-ci.org/phluid61/file-uri)
+[![Gem Version](https://badge.fury.io/rb/file-uri.png)](http://badge.fury.io/rb/file-uri)
 
 **Example**
 
