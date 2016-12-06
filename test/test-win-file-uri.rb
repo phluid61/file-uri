@@ -9,22 +9,26 @@ class Test_win_file_uri < Test::Unit::TestCase
   def test_valid_local_uris
     [
       # POSIX-style
-      ['file:///path/to/file',     '/path/to/file'],
-      ['file:/short/path/to/file', '/short/path/to/file'],
+      ['file:///path/to/file',     '/path/to/file',      '/path/to/file'],
+      ['file:/short/path/to/file', '/short/path/to/file','/short/path/to/file'],
       # drive letter
-      ['file:///c:/path/to/file',  '/c:/path/to/file'],
-      ['file:///c/path/to/file',   '/c:/path/to/file'],
+      ['file:///c:/path/to/file',  '/c:/path/to/file',   'c:/path/to/file'],
+      ['file:///c/path/to/file',   '/c:/path/to/file',   'c:/path/to/file'],
       # no slash
-      ['file:c:/path/to/file',     '/c:/path/to/file'],
-      ['file:c/path/to/file',      '/c:/path/to/file'],
+      ['file:c:/path/to/file',     '/c:/path/to/file',   'c:/path/to/file'],
+      ['file:c/path/to/file',      '/c:/path/to/file',   'c:/path/to/file'],
       # cheeky authority
-      ['file://c:/path/to/file',   '/c:/path/to/file'],
-      ['file://c/path/to/file',    '/c:/path/to/file'],
-    ].each do |str, path|
+      ['file://c:/path/to/file',   '/c:/path/to/file',   'c:/path/to/file'],
+      ['file://c/path/to/file',    '/c:/path/to/file',   'c:/path/to/file'],
+      # stinky colon
+      ['file:///c:/path:to/file',  '/c:/path:to/file',   "c:/path\u{F03A}to/file"],
+    ].each do |str, path, file|
       uri = URI.parse(str)
       assert_kind_of( URI::File, uri )
-      assert_equal( path,  uri.path, str.inspect )
-      assert_equal( true, uri.local? ) # depends on URI::File
+      assert_equal( path,  uri.path )
+      # these depend on it being a URI::File object
+      assert_equal( true, uri.local? )
+      assert_equal( file, uri.to_file_path )
     end
   end
 
@@ -40,15 +44,19 @@ class Test_win_file_uri < Test::Unit::TestCase
     ].each do |str, path, unc|
       uri = URI.parse(str)
       assert_kind_of( URI::File, uri )
-      assert_equal( path, uri.path, "#{str.inspect} => #{uri.to_s}" )
+      assert_equal( path, uri.path )
 
-      assert_equal( false, uri.local? )
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( false, uri.local?(localhost: true) )
+      assert_equal( false, uri.local? )
 
-      assert_equal( unc, uri.to_unc )
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: true) }
+      assert_raise(RuntimeError) { uri.to_file_path }
+
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_equal( unc, uri.to_unc(localhost: true) )
+      assert_equal( unc, uri.to_unc )
     end
   end
 
@@ -63,13 +71,17 @@ class Test_win_file_uri < Test::Unit::TestCase
       assert_equal( path, uri.path )
       assert_equal( host, uri.host )
 
-      assert_equal( false, uri.local? )
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( false, uri.local?(localhost: true) )
+      assert_equal( false, uri.local? )
 
-      assert_equal( unc, uri.to_unc )
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: true) }
+      assert_raise(RuntimeError) { uri.to_file_path }
+
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_equal( unc, uri.to_unc(localhost: true) )
+      assert_equal( unc, uri.to_unc )
     end
   end
 
@@ -77,8 +89,10 @@ class Test_win_file_uri < Test::Unit::TestCase
   # (i.e. sometimes local, sometimes non-local)
   def test_valid_localhost_uris
     [
-      ['file://localhost/path/to/file', '/path/to/file', '\\\\localhost\\path\\to\\file'],
-    ].each do |str, path, unc|
+      ['file://localhost/path/to/file',    '/path/to/file',    '\\\\localhost\\path\\to\\file',     '/path/to/file'],
+      ['file://localhost/c:/path/to/file', '/c:/path/to/file', '\\\\localhost\\c:\\path\\to\\file', 'c:/path/to/file'], # FIXME - bad spec in UNC
+      ['file://localhost/path/to:file',    '/path/to:file',    '\\\\localhost\\path\\to:file',      "/path/to\u{F03A}file"],
+    ].each do |str, path, unc, file|
       uri = URI.parse(str)
       assert_kind_of( URI::File, uri )
       assert_equal( path, uri.path )
@@ -87,9 +101,13 @@ class Test_win_file_uri < Test::Unit::TestCase
       assert_equal( true,  uri.local?(localhost: true) )
       assert_equal( true,  uri.local? )
 
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
+      assert_equal( file, uri.to_file_path(localhost: true) )
+      assert_equal( file, uri.to_file_path )
+
       assert_equal( unc, uri.to_unc(localhost: false) )
-      assert_raise() { uri.to_unc(localhost: true) }
-      assert_raise() { uri.to_unc }
+      assert_raise(RuntimeError) { uri.to_unc(localhost: true) }
+      assert_raise(RuntimeError) { uri.to_unc }
     end
   end
 

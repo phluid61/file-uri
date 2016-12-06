@@ -14,7 +14,9 @@ class Test_file_uri < Test::Unit::TestCase
       uri = URI.parse(str)
       assert_kind_of( URI::File, uri )
       assert_equal( path,  uri.path )
-      assert_equal( true, uri.local? ) # depends on URI::File
+      # these depend on it being a URI::File object
+      assert_equal( true, uri.local? )
+      assert_equal( path, uri.to_file_path )
     end
   end
 
@@ -32,13 +34,17 @@ class Test_file_uri < Test::Unit::TestCase
       assert_kind_of( URI::File, uri )
       assert_equal( path, uri.path )
 
-      assert_equal( false, uri.local? )
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( false, uri.local?(localhost: true) )
+      assert_equal( false, uri.local? )
 
-      assert_equal( unc, uri.to_unc )
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: true) }
+      assert_raise(RuntimeError) { uri.to_file_path }
+
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_equal( unc, uri.to_unc(localhost: true) )
+      assert_equal( unc, uri.to_unc )
     end
   end
 
@@ -53,13 +59,17 @@ class Test_file_uri < Test::Unit::TestCase
       assert_equal( path, uri.path )
       assert_equal( host, uri.host )
 
-      assert_equal( false, uri.local? )
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( false, uri.local?(localhost: true) )
+      assert_equal( false, uri.local? )
 
-      assert_equal( unc, uri.to_unc )
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: true) }
+      assert_raise(RuntimeError) { uri.to_file_path }
+
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_equal( unc, uri.to_unc(localhost: true) )
+      assert_equal( unc, uri.to_unc )
     end
   end
 
@@ -77,9 +87,13 @@ class Test_file_uri < Test::Unit::TestCase
       assert_equal( true,  uri.local?(localhost: true) )
       assert_equal( true,  uri.local? )
 
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
+      assert_equal( path, uri.to_file_path(localhost: true) )
+      assert_equal( path, uri.to_file_path )
+
       assert_equal( unc, uri.to_unc(localhost: false) )
-      assert_raise() { uri.to_unc(localhost: true) }
-      assert_raise() { uri.to_unc }
+      assert_raise(RuntimeError) { uri.to_unc(localhost: true) }
+      assert_raise(RuntimeError) { uri.to_unc }
     end
   end
 
