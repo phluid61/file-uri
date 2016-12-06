@@ -1,6 +1,9 @@
-# file-uri -- the "file" URI scheme
+# file-uri – the "file" URI scheme
 
 Adds explicit handling for 'file' URIs to the `uri` library.
+
+[![Build Status](https://secure.travis-ci.org/phluid61/file-uri.png)](http://travis-ci.org/phluid61/file-uri)
+[![Gem Version](https://badge.fury.io/rb/file-uri.png)](http://badge.fury.io/rb/file-uri)
 
 **Example**
 
@@ -36,7 +39,18 @@ Returns +true+ if this file URI is local.
 
 Returns a UNC filespace selector string for this file URI.
 
-Raises a RuntimeError if this is a local URI (see #local?)
+Raises a RuntimeError if this is a local URI (see `#local?`)
+
+`localhost`:
+
+ * true  => "file://localhost/" is local, "file://example.com/" is non-local
+ * false => "file://localhost/" is non-local
+
+### `to_file_path localhost: true`
+
+Returns a file pathfor this file URI.
+
+Raises a RuntimeError if this is not a local URI (see `#local?`)
 
 `localhost`:
 

@@ -25,8 +25,8 @@ $(target): $(sources) head tail
 	mv $@.tmp $@
 
 define FROM_MASTER
-$(1): $(master)/$(1)
-	cp $< $@
+$(1): $$(master)/$(1)
+	cp $$< $$@
 endef
 $(foreach source,$(sources),$(eval $(call FROM_MASTER,$(source))))
 

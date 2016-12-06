@@ -70,9 +70,12 @@
         <div class="page-header">
           <h1>phluid61</h1>
         </div>
-<h1>file-uri -- the &quot;file&quot; URI scheme</h1>
+<h1>file-uri – the &quot;file&quot; URI scheme</h1>
 
 <p>Adds explicit handling for &#39;file&#39; URIs to the <code>uri</code> library.</p>
+
+<p><a href="http://travis-ci.org/phluid61/file-uri"><img src="https://secure.travis-ci.org/phluid61/file-uri.png" alt="Build Status"></a><br>
+<a href="http://badge.fury.io/rb/file-uri"><img src="https://badge.fury.io/rb/file-uri.png" alt="Gem Version"></a></p>
 
 <p><strong>Example</strong></p>
 
@@ -108,7 +111,20 @@ uri = URI.parse(&quot;file:c:/windows/path.txt&quot;)
 
 <p>Returns a UNC filespace selector string for this file URI.</p>
 
-<p>Raises a RuntimeError if this is a local URI (see #local?)</p>
+<p>Raises a RuntimeError if this is a local URI (see <code>#local?</code>)</p>
+
+<p><code>localhost</code>:</p>
+
+<ul>
+<li>true  =&gt; &quot;file://localhost/&quot; is local, &quot;file://example.com/&quot; is non-local</li>
+<li>false =&gt; &quot;file://localhost/&quot; is non-local</li>
+</ul>
+
+<h3><code>to_file_path localhost: true</code></h3>
+
+<p>Returns a file pathfor this file URI.</p>
+
+<p>Raises a RuntimeError if this is not a local URI (see <code>#local?</code>)</p>
 
 <p><code>localhost</code>:</p>
 
