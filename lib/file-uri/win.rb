@@ -3,7 +3,7 @@ require_relative '../file-uri-common'
 
 module URI
   class WinFile < Generic
-    include FileCommon
+    include File
 
     def scrub path
       path.gsub(%r[\A/([A-Z]):?(?=/|\z)|:]i) {|m| $1 ? "/#{$1}:" : SPECIAL }

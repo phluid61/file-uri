@@ -2,8 +2,8 @@ require 'uri/generic'
 require_relative 'file-uri-common'
 
 module URI
-  class File < Generic
-    include FileCommon
+  class CoreFile < Generic
+    include File
 
     def initialize(scheme,
                    userinfo, host, port, registry,
@@ -25,6 +25,6 @@ module URI
 
   end
 
-  @@schemes['FILE'] = File
+  @@schemes['FILE'] = CoreFile
 
 end
