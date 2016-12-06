@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.date     = '2016-12-06'
   s.summary  = %(file-uri : the "file" URI Scheme)
   s.description = <<EOS
-== file-uri : the "file" URI Scheme
+== file-uri – the "file" URI Scheme
 
 Adds explicit handling for 'file' URIs to the 'uri' library.
 
