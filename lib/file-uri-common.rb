@@ -38,7 +38,7 @@ module URI
     #  * false => 'file://localhost/' is non-local
     #
     def to_file_path localhost: true
-      raise "no local path for non-local URI #{to_s}" unless local?
+      raise "no local path for non-local URI #{to_s}" unless local?(localhost: localhost)
       path
     end
 
