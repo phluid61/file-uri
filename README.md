@@ -36,7 +36,18 @@ Returns +true+ if this file URI is local.
 
 Returns a UNC filespace selector string for this file URI.
 
-Raises a RuntimeError if this is a local URI (see #local?)
+Raises a RuntimeError if this is a local URI (see `#local?`)
+
+`localhost`:
+
+ * true  => "file://localhost/" is local, "file://example.com/" is non-local
+ * false => "file://localhost/" is non-local
+
+### `to_file_path localhost: true`
+
+Returns a file pathfor this file URI.
+
+Raises a RuntimeError if this is not a local URI (see `#local?`)
 
 `localhost`:
 
