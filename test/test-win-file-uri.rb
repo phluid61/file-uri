@@ -22,9 +22,9 @@ class Test_win_file_uri < Test::Unit::TestCase
       ['file://c/path/to/file',    '/c:/path/to/file'],
     ].each do |str, path|
       uri = URI.parse(str)
-      assert_kind_of( URI::WinFile, uri )
+      assert_kind_of( URI::File, uri )
       assert_equal( path,  uri.path, str.inspect )
-      assert_equal( true, uri.local? ) # depends on URI::WinFile
+      assert_equal( true, uri.local? ) # depends on URI::File
     end
   end
 
@@ -39,7 +39,7 @@ class Test_win_file_uri < Test::Unit::TestCase
       ['file://///localhost/Share/dir/file.ext',   '//localhost/Share/dir/file.ext',   '\\\\localhost\\Share\\dir\\file.ext'],
     ].each do |str, path, unc|
       uri = URI.parse(str)
-      assert_kind_of( URI::WinFile, uri )
+      assert_kind_of( URI::File, uri )
       assert_equal( path, uri.path, "#{str.inspect} => #{uri.to_s}" )
 
       assert_equal( false, uri.local? )
@@ -59,7 +59,7 @@ class Test_win_file_uri < Test::Unit::TestCase
       ['file://example.com/Share/dir/file.ext', 'example.com', '/Share/dir/file.ext', '\\\\example.com\\Share\\dir\\file.ext'],
     ].each do |str, host, path, unc|
       uri = URI.parse(str)
-      assert_kind_of( URI::WinFile, uri )
+      assert_kind_of( URI::File, uri )
       assert_equal( path, uri.path )
       assert_equal( host, uri.host )
 
@@ -80,7 +80,7 @@ class Test_win_file_uri < Test::Unit::TestCase
       ['file://localhost/path/to/file', '/path/to/file', '\\\\localhost\\path\\to\\file'],
     ].each do |str, path, unc|
       uri = URI.parse(str)
-      assert_kind_of( URI::WinFile, uri )
+      assert_kind_of( URI::File, uri )
       assert_equal( path, uri.path )
 
       assert_equal( false, uri.local?(localhost: false) )
