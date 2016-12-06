@@ -37,6 +37,17 @@ module URI
     #  * true  => 'file://localhost/' is local, 'file://example.com/' is non-local
     #  * false => 'file://localhost/' is non-local
     #
+    def to_file_path localhost: true
+      raise "no local path for non-local URI #{to_s}" unless local?
+      path
+    end
+
+    ##
+    # localhost:
+    #
+    #  * true  => 'file://localhost/' is local, 'file://example.com/' is non-local
+    #  * false => 'file://localhost/' is non-local
+    #
     def to_unc localhost: true
       if host && !host.empty?
         unless localhost && (host.downcase == LOCALHOST)
