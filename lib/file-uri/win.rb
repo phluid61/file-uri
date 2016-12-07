@@ -46,6 +46,78 @@ module URI
       super(scheme, userinfo, host, port, registry, path, opaque, query, fragment, parser, arg_check)
     end
 
+    #
+    # == Args
+    #
+    # +oth+::
+    #    URI or String
+    #
+    # == Description
+    #
+    # Merges two URI's.
+    #
+    # == Usage
+    #
+    #   require 'uri'
+    #
+    #   uri = URI.parse("http://my.example.com")
+    #   p uri.merge("/main.rbx?page=1")
+    #   # =>  #<URI::HTTP:0x2021f3b0 URL:http://my.example.com/main.rbx?page=1>
+    #
+    def merge(oth)
+      rel = parser.send(:convert_to_uri, oth)
+
+      if rel.absolute?
+        #raise BadURIError, "both URI are absolute" if absolute?
+        # hmm... should return oth for usability?
+        return rel
+      end
+
+      unless self.absolute?
+        raise BadURIError, "both URI are relative"
+      end
+
+      base = self.dup
+
+      authority = rel.userinfo || rel.host || rel.port
+
+      # RFC2396, Section 5.2, 2)
+      if (rel.path.nil? || rel.path.empty?) && !authority && !rel.query
+        base.fragment=(rel.fragment) if rel.fragment
+        return base
+      end
+
+      base.query = nil
+      base.fragment=(nil)
+
+      # RFC2396, Section 5.2, 4)
+      if !authority
+        # Difference from URI::Generic -- handle drive letter
+        base_path = base.path
+        rel_path = rel.path
+        if base_path && rel_path
+          if rel_path =~ %r[\A(\.\.(?=/|\z)|/(?![A-Z]:(/|\z)))]i && base_path.sub!(%r[\A/?[A-Z]:(?=/|\z)]i, '')
+            base.set_path($~[0] + merge_path(base_path, rel_path))
+          else
+            base.set_path(merge_path(base_path, rel_path))
+          end
+        end
+      else
+        # RFC2396, Section 5.2, 4)
+        base.set_path(rel.path) if rel.path
+      end
+
+      # RFC2396, Section 5.2, 7)
+      base.set_userinfo(rel.userinfo) if rel.userinfo
+      base.set_host(rel.host)         if rel.host
+      base.set_port(rel.port)         if rel.port
+      base.query = rel.query       if rel.query
+      base.fragment=(rel.fragment) if rel.fragment
+
+      return base
+    end # merge
+    alias + merge
+
     ##
     # localhost:
     #

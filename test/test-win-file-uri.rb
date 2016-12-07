@@ -111,4 +111,23 @@ class Test_win_file_uri < Test::Unit::TestCase
     end
   end
 
+  def test_relative_resolution
+    [
+      # relative references beginning with dots
+      ['file:/c:/z/y/x', './a',           '/c:/z/y/a'], # \
+      ['file:/c:/z/y/x', '../a',          '/c:/z/a'],   #  ) normal relative resolution
+      ['file:/c:/z/y/x', '../../a',       '/c:/a'],     # /
+      ['file:/c:/z/y/x', '../../../a',    '/c:/a'],     # \_ don't overwrite drive letter
+      ['file:/c:/z/y/x', '../../../../a', '/c:/a'],     # /
+      # ... beginning with a slash
+      ['file:/c:/z/y/x', '/a',            '/c:/a'], # relative to drive letter
+      ['file:/c:/z/y/x', '/d:/a',         '/d:/a'], # whole absolute path
+      ['file:/c:/z/y/x', '/../a',         '/c:/a'], # weird (but legal) reference
+    ].each do |base, rel, merged_path|
+      b = URI.parse(base)
+      m = b + rel
+      assert_equal( merged_path, m.path, "#{base.inspect} + #{rel.inspect}")
+    end
+  end
+
 end
