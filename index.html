@@ -83,6 +83,7 @@
 require &#39;file-uri&#39;
 
 uri = URI.parse(&quot;file:///path/to/file.txt&quot;)
+#=&gt; #&lt;URI::CoreFile file:/path/to/file.txt&gt;
 </code></pre>
 
 <p>Also includes a Windows-specific version, which has extra handling for<br>
@@ -92,13 +93,17 @@ drive letters at the start of paths.</p>
 require &#39;file-uri/win&#39;
 
 uri = URI.parse(&quot;file:c:/windows/path.txt&quot;)
+#=&gt; #&lt;URI::WinFile file:/c:/windows/path.txt&gt;
+
+uri + &quot;/absolute/path.txt&quot;
+#=&gt; #&lt;URI::WinFile file:/c:/absolute/path.txt&gt;
 </code></pre>
 
 <h2>URI::File</h2>
 
 <h3><code>local? localhost: true</code></h3>
 
-<p>Returns +true+ if this file URI is local.</p>
+<p>Returns <code>true</code> if this file URI is local.</p>
 
 <p><code>localhost</code>:</p>
 
@@ -122,7 +127,7 @@ uri = URI.parse(&quot;file:c:/windows/path.txt&quot;)
 
 <h3><code>to_file_path localhost: true</code></h3>
 
-<p>Returns a file pathfor this file URI.</p>
+<p>Returns a file path for this file URI.</p>
 
 <p>Raises a RuntimeError if this is not a local URI (see <code>#local?</code>)</p>
 
