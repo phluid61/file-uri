@@ -12,6 +12,7 @@ require 'uri'
 require 'file-uri'
 
 uri = URI.parse("file:///path/to/file.txt")
+#=> #<URI::CoreFile file:/path/to/file.txt>
 ~~~
 
 Also includes a Windows-specific version, which has extra handling for
@@ -22,13 +23,17 @@ require 'uri'
 require 'file-uri/win'
 
 uri = URI.parse("file:c:/windows/path.txt")
+#=> #<URI::WinFile file:/c:/windows/path.txt>
+
+uri + "/absolute/path.txt"
+#=> #<URI::WinFile file:/c:/absolute/path.txt>
 ~~~
 
 ## URI::File
 
 ### `local? localhost: true`
 
-Returns +true+ if this file URI is local.
+Returns `true` if this file URI is local.
 
 `localhost`:
 
@@ -48,7 +53,7 @@ Raises a RuntimeError if this is a local URI (see `#local?`)
 
 ### `to_file_path localhost: true`
 
-Returns a file pathfor this file URI.
+Returns a file path for this file URI.
 
 Raises a RuntimeError if this is not a local URI (see `#local?`)
 
