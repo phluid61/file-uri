@@ -1,5 +1,5 @@
 require 'uri/generic'
-require_relative 'file-uri-common'
+require_relative 'file-uri/common'
 
 module URI
   class CoreFile < Generic
