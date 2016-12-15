@@ -31,16 +31,18 @@ uri + "/absolute/path.txt"
 
 ## URI::File
 
-### `local? localhost: true`
+### `local?( localhost: true )`
 
 Returns `true` if this file URI is local.
 
 `localhost`:
 
- * true  => "file://localhost/" is local, "file://example.com/" is non-local
- * false => "file://localhost/" is non-local
+| URI                   | :any  | true      | false     |
+| --------------------- | ----- | --------- | --------- |
+| "file://localhost/"   | local | local     | non-local |
+| "file://example.com/" | local | non-local | non-local |
 
-### `to_unc localhost: true`
+### `to_unc( localhost: true )`
 
 Returns a UNC filespace selector string for this file URI.
 
@@ -48,10 +50,12 @@ Raises a RuntimeError if this is a local URI (see `#local?`)
 
 `localhost`:
 
- * true  => "file://localhost/" is local, "file://example.com/" is non-local
- * false => "file://localhost/" is non-local
+| URI                   | :any  | true      | false     |
+| --------------------- | ----- | --------- | --------- |
+| "file://localhost/"   | local | local     | non-local |
+| "file://example.com/" | local | non-local | non-local |
 
-### `to_file_path localhost: true`
+### `to_file_path( localhost: true )`
 
 Returns a file path for this file URI.
 
@@ -59,6 +63,8 @@ Raises a RuntimeError if this is not a local URI (see `#local?`)
 
 `localhost`:
 
- * true  => "file://localhost/" is local, "file://example.com/" is non-local
- * false => "file://localhost/" is non-local
+| URI                   | :any  | true      | false     |
+| --------------------- | ----- | --------- | --------- |
+| "file://localhost/"   | local | local     | non-local |
+| "file://example.com/" | local | non-local | non-local |
 
