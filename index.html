@@ -102,18 +102,35 @@ uri + &quot;/absolute/path.txt&quot;
 
 <h2>URI::File</h2>
 
-<h3><code>local? localhost: true</code></h3>
+<h3><code>local?( localhost: true )</code></h3>
 
 <p>Returns <code>true</code> if this file URI is local.</p>
 
 <p><code>localhost</code>:</p>
 
-<ul>
-<li>true  =&gt; &quot;file://localhost/&quot; is local, &quot;file://example.com/&quot; is non-local</li>
-<li>false =&gt; &quot;file://localhost/&quot; is non-local</li>
-</ul>
+<table><thead>
+<tr>
+<th>URI</th>
+<th>:any</th>
+<th>true</th>
+<th>false</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;file://localhost/&quot;</td>
+<td>local</td>
+<td>local</td>
+<td>non-local</td>
+</tr>
+<tr>
+<td>&quot;file://example.com/&quot;</td>
+<td>local</td>
+<td>non-local</td>
+<td>non-local</td>
+</tr>
+</tbody></table>
 
-<h3><code>to_unc localhost: true</code></h3>
+<h3><code>to_unc( localhost: true )</code></h3>
 
 <p>Returns a UNC filespace selector string for this file URI.</p>
 
@@ -121,12 +138,29 @@ uri + &quot;/absolute/path.txt&quot;
 
 <p><code>localhost</code>:</p>
 
-<ul>
-<li>true  =&gt; &quot;file://localhost/&quot; is local, &quot;file://example.com/&quot; is non-local</li>
-<li>false =&gt; &quot;file://localhost/&quot; is non-local</li>
-</ul>
+<table><thead>
+<tr>
+<th>URI</th>
+<th>:any</th>
+<th>true</th>
+<th>false</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;file://localhost/&quot;</td>
+<td>local</td>
+<td>local</td>
+<td>non-local</td>
+</tr>
+<tr>
+<td>&quot;file://example.com/&quot;</td>
+<td>local</td>
+<td>non-local</td>
+<td>non-local</td>
+</tr>
+</tbody></table>
 
-<h3><code>to_file_path localhost: true</code></h3>
+<h3><code>to_file_path( localhost: true )</code></h3>
 
 <p>Returns a file path for this file URI.</p>
 
@@ -134,10 +168,27 @@ uri + &quot;/absolute/path.txt&quot;
 
 <p><code>localhost</code>:</p>
 
-<ul>
-<li>true  =&gt; &quot;file://localhost/&quot; is local, &quot;file://example.com/&quot; is non-local</li>
-<li>false =&gt; &quot;file://localhost/&quot; is non-local</li>
-</ul>
+<table><thead>
+<tr>
+<th>URI</th>
+<th>:any</th>
+<th>true</th>
+<th>false</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;file://localhost/&quot;</td>
+<td>local</td>
+<td>local</td>
+<td>non-local</td>
+</tr>
+<tr>
+<td>&quot;file://example.com/&quot;</td>
+<td>local</td>
+<td>non-local</td>
+<td>non-local</td>
+</tr>
+</tbody></table>
 <pre id="license" class="no-highlight">Copyright (c) 2016, Matthew Kerwin <matthew@kerwin.net.au>
 
 Permission to use, copy, modify, and/or distribute this software for any
