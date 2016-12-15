@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 require 'uri/generic'
-require_relative '../file-uri-common'
+require_relative 'common'
 
 module URI
   class WinFile < Generic
