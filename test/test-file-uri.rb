@@ -1,4 +1,6 @@
+# encoding: UTF-8
 require 'test/unit'
+require 'tempfile'
 $VERBOSE = true
 
 
@@ -103,6 +105,22 @@ class Test_file_uri < Test::Unit::TestCase
       assert_raise(RuntimeError) { uri.to_unc(localhost: true) }
       assert_raise(RuntimeError) { uri.to_unc }
       assert_raise(RuntimeError) { uri.to_unc(localhost: :any) }
+    end
+  end
+
+  def test_open
+    input = "abcde"
+    tmp = Tempfile.new('file-uri')
+    begin
+      path = tmp.path
+      tmp.write(input)
+      tmp.close
+
+      uri = URI.parse('file:' + path)
+      assert_kind_of( URI::File, uri )
+      assert_equal( input, uri.open('r') {|io| io.read } )
+    ensure
+      tmp.unlink
     end
   end
 
