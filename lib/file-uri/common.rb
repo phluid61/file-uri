@@ -66,6 +66,16 @@ module URI
       raise "no UNC conversion for local URI #{to_s}"
     end
 
+    ##
+    # open( [mode [, perm]] [, opt]) --> io or nil
+    # open( [mode [, perm]] [, opt]) {|io| block } --> obj
+    #
+    # See Kernel#open, URI::File#to_file_path
+    #
+    def open *args, localhost: :true, &block
+      Kernel::open to_file_path(localhost: localhost), *args, &block
+    end
+
     COLON = ?:.freeze
     SLASH = ?/.freeze
     DBL_SLASH     = '//'.freeze

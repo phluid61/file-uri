@@ -68,3 +68,8 @@ Raises a RuntimeError if this is not a local URI (see `#local?`)
 | "file://localhost/"   | local | local     | non-local |
 | "file://example.com/" | local | non-local | non-local |
 
+
+### `open( [mode [, perm]] [, opt]) → io or nil`
+### `open( [mode [, perm]] [, opt]) {|io| block } → obj`
+
+See `Kernel#open`, `URI::File#to_file_path`
