@@ -37,14 +37,17 @@ class Test_file_uri < Test::Unit::TestCase
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( false, uri.local?(localhost: true) )
       assert_equal( false, uri.local? )
+      assert_equal( false, uri.local?(localhost: :any) )
 
       assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
       assert_raise(RuntimeError) { uri.to_file_path(localhost: true) }
       assert_raise(RuntimeError) { uri.to_file_path }
+      assert_raise(RuntimeError) { uri.to_file_path(localhost: :any) }
 
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_equal( unc, uri.to_unc(localhost: true) )
       assert_equal( unc, uri.to_unc )
+      assert_equal( unc, uri.to_unc(localhost: :any) )
     end
   end
 
@@ -62,14 +65,17 @@ class Test_file_uri < Test::Unit::TestCase
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( false, uri.local?(localhost: true) )
       assert_equal( false, uri.local? )
+      assert_equal( true,  uri.local?(localhost: :any) )
 
       assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
       assert_raise(RuntimeError) { uri.to_file_path(localhost: true) }
       assert_raise(RuntimeError) { uri.to_file_path }
+      assert_equal( path, uri.to_file_path(localhost: :any) )
 
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_equal( unc, uri.to_unc(localhost: true) )
       assert_equal( unc, uri.to_unc )
+      assert_raise(RuntimeError) { uri.to_unc(localhost: :any) }
     end
   end
 
@@ -86,14 +92,17 @@ class Test_file_uri < Test::Unit::TestCase
       assert_equal( false, uri.local?(localhost: false) )
       assert_equal( true,  uri.local?(localhost: true) )
       assert_equal( true,  uri.local? )
+      assert_equal( true,  uri.local?(localhost: :any) )
 
       assert_raise(RuntimeError) { uri.to_file_path(localhost: false) }
       assert_equal( path, uri.to_file_path(localhost: true) )
       assert_equal( path, uri.to_file_path )
+      assert_equal( path, uri.to_file_path(localhost: :any) )
 
       assert_equal( unc, uri.to_unc(localhost: false) )
       assert_raise(RuntimeError) { uri.to_unc(localhost: true) }
       assert_raise(RuntimeError) { uri.to_unc }
+      assert_raise(RuntimeError) { uri.to_unc(localhost: :any) }
     end
   end
 

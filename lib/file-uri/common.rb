@@ -19,11 +19,13 @@ module URI
     ##
     # localhost:
     #
+    #  * :any  => any non-empty host is local
     #  * true  => 'file://localhost/' is local, 'file://example.com/' is non-local
     #  * false => 'file://localhost/' is non-local
     #
     def local? localhost: true
       if host && !host.empty?
+        return true if localhost == :any
         return localhost && (host.downcase == LOCALHOST)
       elsif path.start_with? DBL_SLASH
         return false
@@ -34,6 +36,7 @@ module URI
     ##
     # localhost:
     #
+    #  * :any  => any non-empty host is local
     #  * true  => 'file://localhost/' is local, 'file://example.com/' is non-local
     #  * false => 'file://localhost/' is non-local
     #
@@ -45,12 +48,13 @@ module URI
     ##
     # localhost:
     #
+    #  * :any  => any non-empty host is local
     #  * true  => 'file://localhost/' is local, 'file://example.com/' is non-local
     #  * false => 'file://localhost/' is non-local
     #
     def to_unc localhost: true
       if host && !host.empty?
-        unless localhost && (host.downcase == LOCALHOST)
+        if localhost != :any && (!localhost || (host.downcase != LOCALHOST))
           unc = DBL_BACKSLASH + host
           unc += COLON + port if port
           unc += path.gsub(%r[/], BACKSLASH)
