@@ -1,7 +1,7 @@
 require 'uri/generic'
 
 module URI
-  module File
+  module FileCommon
 
     COMPONENT = %i[
       scheme
