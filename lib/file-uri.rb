@@ -3,7 +3,7 @@ require_relative 'file-uri/common'
 
 module URI
   class CoreFile < Generic
-    include File
+    include FileCommon
 
     def initialize(scheme,
                    userinfo, host, port, registry,

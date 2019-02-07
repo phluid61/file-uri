@@ -5,7 +5,7 @@ require_relative 'common'
 
 module URI
   class WinFile < Generic
-    include File
+    include FileCommon
 
     def fixup path
       path.gsub(%r[\A/([A-Z]):?(?=/|\z)]i, '/\1:')

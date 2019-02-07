@@ -14,9 +14,9 @@ class Test_file_uri < Test::Unit::TestCase
       ['file:/short/path/to/file', '/short/path/to/file'],
     ].each do |str, path|
       uri = URI.parse(str)
-      assert_kind_of( URI::File, uri )
+      assert_kind_of( URI::FileCommon, uri )
       assert_equal( path,  uri.path )
-      # these depend on it being a URI::File object
+      # these depend on it being a URI::FileCommon object
       assert_equal( true, uri.local? )
       assert_equal( path, uri.to_file_path )
     end
@@ -33,7 +33,7 @@ class Test_file_uri < Test::Unit::TestCase
       ['file://///localhost/Share/dir/file.ext',   '//localhost/Share/dir/file.ext',   '\\\\localhost\\Share\\dir\\file.ext'],
     ].each do |str, path, unc|
       uri = URI.parse(str)
-      assert_kind_of( URI::File, uri )
+      assert_kind_of( URI::FileCommon, uri )
       assert_equal( path, uri.path )
 
       assert_equal( false, uri.local?(localhost: false) )
@@ -60,7 +60,7 @@ class Test_file_uri < Test::Unit::TestCase
       ['file://example.com/Share/dir/file.ext', 'example.com', '/Share/dir/file.ext', '\\\\example.com\\Share\\dir\\file.ext'],
     ].each do |str, host, path, unc|
       uri = URI.parse(str)
-      assert_kind_of( URI::File, uri )
+      assert_kind_of( URI::FileCommon, uri )
       assert_equal( path, uri.path )
       assert_equal( host, uri.host )
 
@@ -88,7 +88,7 @@ class Test_file_uri < Test::Unit::TestCase
       ['file://localhost/path/to/file', '/path/to/file', '\\\\localhost\\path\\to\\file'],
     ].each do |str, path, unc|
       uri = URI.parse(str)
-      assert_kind_of( URI::File, uri )
+      assert_kind_of( URI::FileCommon, uri )
       assert_equal( path, uri.path )
 
       assert_equal( false, uri.local?(localhost: false) )
@@ -117,7 +117,7 @@ class Test_file_uri < Test::Unit::TestCase
       tmp.close
 
       uri = URI.parse('file:' + path)
-      assert_kind_of( URI::File, uri )
+      assert_kind_of( URI::FileCommon, uri )
       assert_equal( input, uri.open('r') {|io| io.read } )
     ensure
       tmp.unlink
