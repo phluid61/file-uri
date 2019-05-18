@@ -106,7 +106,9 @@ uri + &quot;/absolute/path.txt&quot;
 
 <p>Returns <code>true</code> if this file URI is local.</p>
 
-<p><code>localhost</code>:</p>
+<p>The <code>localhost</code> parameter instructs the library how to interpret<br>
+special values in the host field, to retain compatibility with various<br>
+other libraries and programs out there:</p>
 
 <table><thead>
 <tr>
@@ -136,59 +138,11 @@ uri + &quot;/absolute/path.txt&quot;
 
 <p>Raises a RuntimeError if this is a local URI (see <code>#local?</code>)</p>
 
-<p><code>localhost</code>:</p>
-
-<table><thead>
-<tr>
-<th>URI</th>
-<th>:any</th>
-<th>true</th>
-<th>false</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>&quot;file://localhost/&quot;</td>
-<td>local</td>
-<td>local</td>
-<td>non-local</td>
-</tr>
-<tr>
-<td>&quot;file://example.com/&quot;</td>
-<td>local</td>
-<td>non-local</td>
-<td>non-local</td>
-</tr>
-</tbody></table>
-
 <h3><code>to_file_path( localhost: true )</code></h3>
 
 <p>Returns a file path for this file URI.</p>
 
 <p>Raises a RuntimeError if this is not a local URI (see <code>#local?</code>)</p>
-
-<p><code>localhost</code>:</p>
-
-<table><thead>
-<tr>
-<th>URI</th>
-<th>:any</th>
-<th>true</th>
-<th>false</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>&quot;file://localhost/&quot;</td>
-<td>local</td>
-<td>local</td>
-<td>non-local</td>
-</tr>
-<tr>
-<td>&quot;file://example.com/&quot;</td>
-<td>local</td>
-<td>non-local</td>
-<td>non-local</td>
-</tr>
-</tbody></table>
 
 <h3><code>open( [mode [, perm]] [, opt]) → io or nil</code></h3>
 
