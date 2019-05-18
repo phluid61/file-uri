@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name     = 'file-uri'
-  s.version  = '1.3.1'
+  s.version  = '1.3.2-dev'
   s.date     = '2019-05-19'
   s.summary  = %(file-uri – the "file" URI Scheme)
   s.description = <<EOS
