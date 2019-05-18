@@ -27,7 +27,7 @@ module URI
       if host && !host.empty?
         return true if localhost == :any
         return localhost && (host.downcase == LOCALHOST)
-      elsif path.start_with? DBL_SLASH
+      elsif path && path.start_with?(DBL_SLASH)
         return false
       end
       true
