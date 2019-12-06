@@ -14,7 +14,7 @@ A clear and concise description of what the bug is.
 A minimal code example that reproduces the error.
 
 ```ruby
-require 'mug'
+require 'file-uri'
 
 loop do
   # something
