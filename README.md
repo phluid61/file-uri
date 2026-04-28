@@ -63,3 +63,19 @@ Raises a RuntimeError if this is not a local URI (see `#local?`)
 ### `open( [mode [, perm]] [, opt]) {|io| block } → obj`
 
 See `Kernel#open`, `URI::File#to_file_path`
+
+
+## Contributor Code of Conduct
+
+This repository is subject to a [Contributor Code of Conduct](code_of_conduct.md)
+adapted from the [Contributor Covenant][cc], version 3.0, available at
+<https://www.contributor-covenant.org/version/3/0/>
+
+
+[cc]: https://www.contributor-covenant.org
+
+
+## Licence
+
+This project is licensed under the ISC licence. See [LICENSE](LICENSE)
+for details
