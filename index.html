@@ -2,46 +2,66 @@
 layout: default
 title: "file-uri – the \"file\" URI scheme"
 ---
-<h1>file-uri – the &quot;file&quot; URI scheme</h1>
+<h1><a href="#file-uri--the-file-uri-scheme" aria-hidden="true" class="anchor" id="file-uri--the-file-uri-scheme"></a>file-uri – the &quot;file&quot; URI scheme</h1>
+<p><a href="http://badge.fury.io/rb/file-uri"><img src="https://badge.fury.io/rb/file-uri.png" alt="Gem Version" /></a>
+<a href="code_of_conduct.html"><img src="https://img.shields.io/badge/Contributor%20Covenant-v3.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a></p>
 <p>Adds explicit handling for 'file' URIs to the <code>uri</code> library.</p>
-<p><a href="http://travis-ci.org/phluid61/file-uri"><img src="https://secure.travis-ci.org/phluid61/file-uri.png" alt="Build Status" /></a>
-<a href="http://badge.fury.io/rb/file-uri"><img src="https://badge.fury.io/rb/file-uri.png" alt="Gem Version" /></a></p>
 <p><strong>Example</strong></p>
-<pre><code class="language-ruby">require 'uri'
-require 'file-uri'
-
-uri = URI.parse(&quot;file:///path/to/file.txt&quot;)
-#=&gt; #&lt;URI::CoreFile file:/path/to/file.txt&gt;
-</code></pre>
+<pre lang="ruby" style="background-color:#2b303b;"><code><span style="color:#8fa1b3;">require </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">uri</span><span style="color:#c0c5ce;">&#39;
+</span><span style="color:#8fa1b3;">require </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">file-uri</span><span style="color:#c0c5ce;">&#39;
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">uri = </span><span style="color:#ebcb8b;">URI</span><span style="color:#c0c5ce;">.parse(&quot;</span><span style="color:#a3be8c;">file:///path/to/file.txt</span><span style="color:#c0c5ce;">&quot;)
+</span><span style="color:#65737e;">#=&gt; #&lt;URI::CoreFile file:/path/to/file.txt&gt;
+</span></code></pre>
 <p>Also includes a Windows-specific version, which has extra handling for
 drive letters at the start of paths.</p>
-<pre><code class="language-ruby">require 'uri'
-require 'file-uri/win'
-
-uri = URI.parse(&quot;file:c:/windows/path.txt&quot;)
-#=&gt; #&lt;URI::WinFile file:/c:/windows/path.txt&gt;
-
-uri + &quot;/absolute/path.txt&quot;
-#=&gt; #&lt;URI::WinFile file:/c:/absolute/path.txt&gt;
-</code></pre>
-<h2>URI::File</h2>
-<h3><code>local?( localhost: true )</code></h3>
+<pre lang="ruby" style="background-color:#2b303b;"><code><span style="color:#8fa1b3;">require </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">uri</span><span style="color:#c0c5ce;">&#39;
+</span><span style="color:#8fa1b3;">require </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">file-uri/win</span><span style="color:#c0c5ce;">&#39;
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">uri = </span><span style="color:#ebcb8b;">URI</span><span style="color:#c0c5ce;">.parse(&quot;</span><span style="color:#a3be8c;">file:c:/windows/path.txt</span><span style="color:#c0c5ce;">&quot;)
+</span><span style="color:#65737e;">#=&gt; #&lt;URI::WinFile file:/c:/windows/path.txt&gt;
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">uri + &quot;</span><span style="color:#a3be8c;">/absolute/path.txt</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#65737e;">#=&gt; #&lt;URI::WinFile file:/c:/absolute/path.txt&gt;
+</span></code></pre>
+<h2><a href="#urifile" aria-hidden="true" class="anchor" id="urifile"></a>URI::File</h2>
+<h3><a href="#local-localhost-true-" aria-hidden="true" class="anchor" id="local-localhost-true-"></a><code>local?( localhost: true )</code></h3>
 <p>Returns <code>true</code> if this file URI is local.</p>
 <p>The <code>localhost</code> parameter instructs the library how to interpret
 special values in the host field, to retain compatibility with various
 other libraries and programs out there:</p>
-<p>| URI                   | :any  | true      | false     |
-| --------------------- | ----- | --------- | --------- |
-| &quot;file://localhost/&quot;   | local | local     | non-local |
-| &quot;file://example.com/&quot; | local | non-local | non-local |</p>
-<h3><code>to_unc( localhost: true )</code></h3>
+<table>
+<thead>
+<tr>
+<th>URI</th>
+<th>:any</th>
+<th>true</th>
+<th>false</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;file://localhost/&quot;</td>
+<td>local</td>
+<td>local</td>
+<td>non-local</td>
+</tr>
+<tr>
+<td>&quot;file://example.com/&quot;</td>
+<td>local</td>
+<td>non-local</td>
+<td>non-local</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="#to_unc-localhost-true-" aria-hidden="true" class="anchor" id="to_unc-localhost-true-"></a><code>to_unc( localhost: true )</code></h3>
 <p>Returns a UNC filespace selector string for this file URI.</p>
 <p>Raises a RuntimeError if this is a local URI (see <code>#local?</code>)</p>
-<h3><code>to_file_path( localhost: true )</code></h3>
+<h3><a href="#to_file_path-localhost-true-" aria-hidden="true" class="anchor" id="to_file_path-localhost-true-"></a><code>to_file_path( localhost: true )</code></h3>
 <p>Returns a file path for this file URI.</p>
 <p>Raises a RuntimeError if this is not a local URI (see <code>#local?</code>)</p>
-<h3><code>open( [mode [, perm]] [, opt]) → io or nil</code></h3>
-<h3><code>open( [mode [, perm]] [, opt]) {|io| block } → obj</code></h3>
+<h3><a href="#open-mode--perm--opt--io-or-nil" aria-hidden="true" class="anchor" id="open-mode--perm--opt--io-or-nil"></a><code>open( [mode [, perm]] [, opt]) → io or nil</code></h3>
+<h3><a href="#open-mode--perm--opt-io-block---obj" aria-hidden="true" class="anchor" id="open-mode--perm--opt-io-block---obj"></a><code>open( [mode [, perm]] [, opt]) {|io| block } → obj</code></h3>
 <p>See <code>Kernel#open</code>, <code>URI::File#to_file_path</code></p>
 <pre id="license" class="no-highlight">Copyright (c) 2019, Matthew Kerwin &lt;matthew@kerwin.net.au&gt;
 
